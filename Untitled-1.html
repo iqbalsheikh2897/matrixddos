@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix DDoS Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ff9d;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --accent: #ff0066;
+            --gray: rgba(255,255,255,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .resellers {
+    padding: 100px 0;
+    background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.8));
+}
+
+.reseller-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.reseller-main {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--gray);
+    border-radius: 20px;
+    padding: 30px;
+    width: 350px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.reseller-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: var(--dark);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.reseller-profile {
+    text-align: center;
+    margin-bottom: 25px;
+    padding-top: 20px;
+}
+
+.reseller-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.reseller-icon i {
+    font-size: 35px;
+    color: var(--dark);
+}
+
+.reseller-id {
+    color: var(--primary);
+    font-size: 16px;
+    margin: 5px 0;
+}
+.key-rates-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #00ff9d, #ff0066);
+    color: #0a0a0a;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.key-rates-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,255,157,0.2);
+    background: linear-gradient(45deg, #ff0066, #00ff9d);
+    color: #ffffff;
+}
+
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,255,0,0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #4CAF50;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #4CAF50;
+}
+
+.reseller-info {
+    margin: 25px 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.info-item i {
+    color: var(--primary);
+    width: 20px;
+}
+
+.btn-admin {
+    background: var(--accent);
+    width: 100%;
+}
+
+.reseller-main:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0,255,157,0.1);
+}
+
+
+        header {
+            background: rgba(0,0,0,0.9);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            margin-left: 30px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('matrix-bg.jpg') center/cover;
+        }
+
+        .hero-content {
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .features {
+            padding: 100px 0;
+            background: var(--dark);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--gray);
+            padding: 30px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .pricing {
+            padding: 100px 0;
+            background: rgba(0,0,0,0.8);
+        }
+
+        .pricing h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: var(--primary);
+        }
+
+        .price-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .price-card {
+            background: var(--gray);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .price-card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .features-list {
+            margin-bottom: 30px;
+        }
+
+        .features-list li {
+            margin-bottom: 10px;
+            list-style: none;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.9);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .social-links a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-weight: 600;
+            margin: 0 10px;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        #official-resellers, #panel-info {
+            background: var(--dark);
+            border-top: 1px solid var(--gray);
+            padding: 100px 0;
+        }
+
+        #official-resellers .feature-card,
+        #panel-info .feature-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--gray);
+            transition: 0.3s;
+        }
+
+        #official-resellers .feature-card:hover,
+        #panel-info .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .cta-button {
+            margin-top: 40px;
+        }
+
+        .cta-button .btn {
+            font-size: 1.2em;
+            padding: 15px 40px;
+        }
+        .panel-info {
+    padding: 100px 0;
+    background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.8));
+}
+.become-reseller {
+    padding: 80px 0;
+    background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.8));
+    text-align: center;
+}
+
+.reseller-cta {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.reseller-cta h2 {
+    color: var(--primary);
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.reseller-cta p {
+    color: var(--light);
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.btn-reseller {
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    padding: 15px 40px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-reseller:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,255,157,0.2);
+}
+
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.info-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--gray);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.panel-description {
+    padding: 40px 0;
+    background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.8));
+    border-top: 1px solid var(--gray);
+}
+
+.description-text {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    color: var(--light);
+    font-size: 16px;
+    line-height: 1.8;
+    padding: 0 20px;
+}
+
+.info-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, var(--primary), var(--accent));
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-icon i {
+    font-size: 35px;
+    color: var(--dark);
+}
+
+.info-card h3 {
+    color: var(--primary);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.info-divider {
+    height: 2px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    margin: 20px auto;
+    width: 80%;
+}
+
+.info-list {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.info-list li {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: #0a0a0a;
+}
+
+/* Add background transparency to sections */
+.hero, .features, .pricing, .resellers, .panel-info, .become-reseller {
+    background: rgba(0, 0, 0, 0.7) !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Make header semi-transparent */
+header {
+    background: rgba(0, 0, 0, 0.9) !important;
+}
+
+
+.info-list i {
+    color: var(--primary);
+    font-size: 16px;
+}
+document.querySelector('.key-rates-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+        behavior: 'smooth'
+    });
+});
+
+.info-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0,255,157,0.1);
+}
+
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+    <header>
+        <div class="container nav">
+            <div class="logo">MATRIX CHEATS</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#ddos-pricing">DDoS Pricing</a>
+                <a href="#official-resellers">Official Resellers</a>
+                <a href="#reseller-pricing">Become Reseller</a>
+                <a href="#panel-info">Panel Info</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>WELCOME TO MATRIX DDOS</h1>
+            <p>Professional DDoS Attacking & Testing Services</p>
+            <p>Most Advanced BGMI DDoS Bot</p>
+            <a href="https://t.me/MatrixCheats_ddos_bot" class="btn">OFFICIAL MATRIX BOT</a>
+            <a href="https://t.me/Matrix_Cheats" class="btn">OFFICIAL MATRIX CHANNEL</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Our Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Layer 7 Methods</h3>
+                    <ul>
+                        <li>UDP-AMP</li>
+                        <li>TCP-BYPASS</li>
+                        <li>SPIKE-KILLER</li>
+                        <li>GAME-KILLER</li>
+                        <li>UDP-BYPASS</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>Layer 4 Methods</h3>
+                    <ul>
+                        <li>HTTP-FLOOD</li>
+                        <li>HTTPS-BYPASS</li>
+                        <li>CF-BYPASS</li>
+                        <li>TLS-BYPASS</li>
+                        <li>SOCKET-FLOOD</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <h3>System Features</h3>
+                    <ul>
+                        <li>Real-time Attack Status</li>
+                        <li>Multi-Server Infrastructure</li>
+                        <li>Advanced Attack Methods</li>
+                        <li>24/7 Support System</li>
+                        <li>Automatic Recovery</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DDoS Pricing Section -->
+    <section class="pricing" id="ddos-pricing">
+        <div class="container">
+            <h2>DDoS Service Pricing</h2>
+            <div class="price-cards">
+                <div class="price-card">
+                    <div class="price-header">
+                        <h3>1 Day Access</h3>
+                        <div class="price">₹100</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Layer 4 & 7 Methods</li>
+                        <li><i class="fas fa-check"></i> Basic Support</li>
+                        <li><i class="fas fa-check"></i> 180s Attack Duration</li>
+                        <li><i class="fas fa-check"></i> 5 Minutes Cooldown</li>
+                        <li><i class="fas fa-check"></i> Real-time Monitoring</li>
+                    </ul>
+                    <a href="#official-resellers" class="btn">Buy Now</a>
+
+                </div>
+    
+                <div class="price-card popular">
+                    <div class="popular-tag">Most Popular</div>
+                    <div class="price-header">
+                        <h3>3 Days Access</h3>
+                        <div class="price">₹220</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> All Attack Methods</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                        <li><i class="fas fa-check"></i> 180s Attack Duration</li>
+                        <li><i class="fas fa-check"></i> 5 Minutes Cooldown</li>
+                        <li><i class="fas fa-check"></i> Real-time Monitoring</li>
+                    </ul>
+                    <a href="#official-resellers" class="btn">Buy Now</a>
+
+                </div>
+    
+                <div class="price-card">
+                    <div class="price-header">
+                        <h3>7 Days Access</h3>
+                        <div class="price">₹400</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> All Attack Methods</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                        <li><i class="fas fa-check"></i> 180s Attack Duration</li>
+                        <li><i class="fas fa-check"></i> 5 Minutes Cooldown</li>
+                        <li><i class="fas fa-check"></i> Real-time Monitoring</li>
+                    </ul>
+                    <a href="#official-resellers" class="btn">Buy Now</a>
+
+                </div>
+    
+                <div class="price-card">
+                    <div class="price-header">
+                        <h3>30 Days Access</h3>
+                        <div class="price">₹800</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> All Attack Methods</li>
+                        <li><i class="fas fa-check"></i> VIP Support</li>
+                        <li><i class="fas fa-check"></i> 180s Attack Duration</li>
+                        <li><i class="fas fa-check"></i> 5 Minutes Cooldown</li>
+                        <li><i class="fas fa-check"></i> Real-time Monitoring</li>
+                    </ul>
+                    <a href="#official-resellers" class="btn">Buy Now</a>
+
+                </div>
+    
+                <div class="price-card">
+                    <div class="price-header">
+                        <h3>60 Days Access</h3>
+                        <div class="price">₹1,200</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> All Attack Methods</li>
+                        <li><i class="fas fa-check"></i> VIP Support</li>
+                        <li><i class="fas fa-check"></i> 180s Attack Duration</li>
+                        <li><i class="fas fa-check"></i> 5 Minutes Cooldown</li>
+                        <li><i class="fas fa-check"></i> Real-time Monitoring</li>
+                    </ul>
+                    <a href="#official-resellers" class="btn">Buy Now</a>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="resellers" id="official-resellers">
+        <div class="container">
+            <h2>Official Resellers</h2>
+            <div class="reseller-wrapper">
+                <div class="reseller-main">
+                    <div class="reseller-badge">Official Owner</div>
+                    <div class="reseller-profile">
+                        <div class="reseller-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3>Matrix Owner</h3>
+                        <p class="reseller-id">@its_MATRiX_King</p>
+                        <div class="status-badge">
+                            <span class="status-dot"></span>
+                            Online
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Matrix DDoS Developer</span>
+                    </div>
+                    <a href="https://t.me/its_MATRiX_King" class="btn btn-admin">Contact Owner</a>
+                </div>
+    
+                <div class="reseller-main">
+                    <div class="reseller-badge">Standard Reseller</div>
+                    <div class="reseller-profile">
+                        <div class="reseller-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3>STAR x GHOST</h3>
+                        <p class="reseller-id">@STARxGHOST</p>
+                        <div class="status-badge">
+                            <span class="status-dot"></span>
+                            Availabe
+                        </div>
+                    </div>
+                    <div class="reseller-info">
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Standard Plan Reseller</span>
+                        </div>
+
+                    <a href="https://t.me/STARxGHOST" class="btn">Contact Reseller</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing" id="reseller-pricing">
+        <div class="container">
+            <h2>Panel Pricing Plans</h2>
+            <div class="panel-description">
+                <div class="container">
+                    <p class="description-text">Matrix DDoS Panel offers enterprise-grade DDoS Services with advanced Layer 4 & 7 methods. Our multi-server infrastructure ensures high availability and reliable performance for all your testing needs. Join our growing network of satisfied clients and experience professional-grade DDoS services.</p>
+                </div>
+                <div class="container">
+                    <p class="description-text">⚠️⚠️READ CAREFULLY⚠️⚠️</p>
+                </div>
+                <div class="container">
+                    <p class="description-text">If You Recharge Your panel in the below price you will be given the respective balance according to that and you can generate own keys in cheap price</p>
+                </div>
+            </div>
+            <div class="price-cards">
+                <div class="price-card">
+                    <div class="price-header">
+                        <div class="price-badge">Basic</div>
+                        <h3>Starter Plan</h3>
+                        <div class="price">₹2,000</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> 5000₹ Balance</li>
+                        <li><i class="fas fa-check-circle"></i> Basic Support</li>
+                        <li><i class="fas fa-check-circle"></i> Key Generation</li>
+                        <li><i class="fas fa-check-circle"></i> User Management</li>
+                        <li><i class="fas fa-check-circle"></i> Real-time Stats</li>
+                    </ul>
+                    <a href="https://t.me/its_MATRiX_King" class="btn">Buy Starter Plan</a>
+                </div>
+    
+                <div class="price-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="price-header">
+                        <h3>Standard Plan</h3>
+                        <div class="price">₹3,000</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> 8500₹ Balance</li>
+                        <li><i class="fas fa-check-circle"></i> Priority Support</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced Key System</li>
+                        <li><i class="fas fa-check-circle"></i> User Management</li>
+                        <li><i class="fas fa-check-circle"></i> Analytics Dashboard</li>
+                    </ul>
+                    <a href="https://t.me/its_MATRiX_King" class="btn btn-popular">Buy Standard Plan</a>
+                </div>
+    
+                <div class="price-card">
+                    <div class="price-header">
+                        <div class="price-badge">Premium</div>
+                        <h3>Business Plan</h3>
+                        <div class="price">₹5,000</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> 14000₹ Balance</li>
+                        <li><i class="fas fa-check-circle"></i> VIP Support</li>
+                        <li><i class="fas fa-check-circle"></i> Premium Features</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced Analytics</li>
+                        <li><i class="fas fa-check-circle"></i> Priority Access</li>
+                    </ul>
+                    <a href="https://t.me/its_MATRiX_King" class="btn">Buy Business Plan</a>
+                </div>
+    
+                <div class="price-card">
+                    <div class="price-header">
+                        <div class="price-badge">VIP</div>
+                        <h3>Ultimate Plan</h3>
+                        <div class="price">₹10,000</div>
+                    </div>
+                    <div class="price-divider"></div>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> 30000₹ Balance</li>
+                        <li><i class="fas fa-check-circle"></i> 24/7 VIP Support</li>
+                        <li><i class="fas fa-check-circle"></i> Custom Features</li>
+                        <li><i class="fas fa-check-circle"></i> Full Analytics</li>
+                        <li><i class="fas fa-check-circle"></i> Exclusive Access</li>
+                    </ul>
+                    <a href="https://t.me/its_MATRiX_King" class="btn">Buy Ultimate Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Panel Info Section -->
+    
+    <section class="panel-info" id="panel-info">
+        <div class="container">
+            <h2>Panel Information</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3>Key Rates</h3>
+                    <div class="info-divider"></div>
+                    <ul class="info-list">
+                        <li><i class="fas fa-clock"></i> 2 Hours: ₹20</li>
+                        <li><i class="fas fa-clock"></i> 1 Day: ₹80</li>
+                        <li><i class="fas fa-clock"></i> 3 Days: ₹170</li>
+                        <li><i class="fas fa-clock"></i> 7 Days: ₹300</li>
+                        <li><i class="fas fa-clock"></i> 30 Days: ₹600</li>
+                        <li><i class="fas fa-clock"></i> 60 Days: ₹820</li>
+                        <a href="#reseller-pricing" class="key-rates-btn">BUY KEYS IN THIS PRICE</a>
+                    </ul>
+                </div>
+                
+
+                <section class="become-reseller">
+                    <div class="container">
+                        <div class="reseller-cta">
+                            <h2>Become an Official Reseller</h2>
+                            <p>Join our network of trusted resellers and start your own business today</p>
+                            <a href="https://t.me/its_MATRiX_King" class="btn btn-reseller">Click Here to Apply</a>
+                        </div>
+                    </div>
+                </section>
+                            
+    
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>PANEL FEATURES</h3>
+                    <div class="info-divider"></div>
+                    <ul class="info-list">
+                        <li><i class="fas fa-check"></i> Generate new license key</li>
+                        <li><i class="fas fa-check"></i> Delete key/user</li>
+                        <li><i class="fas fa-check"></i> View your unused keys</li>
+                        <li><i class="fas fa-check"></i> View your active users details</li>
+                        <li><i class="fas fa-check"></i> Check your wallet balance</li>
+                        <li><i class="fas fa-check"></i> GET FREE TRIAL KEYS FOR GIVEAWAY</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://t.me/MATRIX_CHEATS">Official Channel</a>
+            </div>
+            <p>&copy; 2025 Matrix DDoS. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const nums = '0123456789';
+const alphabet = katakana + latin + nums;
+
+const fontSize = 16;
+const columns = canvas.width/fontSize;
+const rainDrops = [];
+
+for(let x = 0; x < columns; x++) {
+    rainDrops[x] = 1;
+}
+
+function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = '#0F0';
+    ctx.font = fontSize + 'px monospace';
+
+    for(let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+        ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+        
+        if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975) {
+            rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+    }
+}
+
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+setInterval(draw, 30);
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.feature-card, .price-card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < window.innerHeight - 100) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
