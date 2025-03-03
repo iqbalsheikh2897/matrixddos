@@ -62,11 +62,11 @@ admin_owner = "7418099890"
 # Price configuration
 PRICES = {
     "2h": 20,
-    "1d": 200,
-    "3d": 320, 
-    "7d": 600,
-    "30d": 1100,
-    "60d": 1800
+    "1d": 80,
+    "3d": 170, 
+    "7d": 300,
+    "30d": 600,
+    "60d": 820
 }
 
 IST = pytz.timezone('Asia/Kolkata')
@@ -770,21 +770,21 @@ def broadcast_message(message):
 def show_prices(message):
     price_text = """
 💎 𝗣𝗔𝗡𝗘𝗟 𝗣𝗥𝗜𝗖𝗘𝗦:
-• ₹2,000 ➜ 10000 Credits
-• ₹3,000 ➜ 16,000 Credits
-• ₹5,000 ➜ 27,000 Credits
-• ₹10,000 ➜ 60,000 Credits
+• ₹2,000 ➜ 5000 Balance
+• ₹3,000 ➜ 9000 Balance
+• ₹5,000 ➜ 15000 Balance
+• ₹10,000 ➜ 32000 Balance
 
 
 💰 𝗞𝗘𝗬 𝗣𝗥𝗜𝗖𝗘𝗦:
-• 2 Hours: 20 Credits
-• 1 Day: 200 Credits
-• 3 Days: 320 Credits
-• 7 Days: 600 Credits
-• 30 Days: 1,100 Credits
-• 60 Days: 1,800 Credits
+• 2 Hours: 20 Balance
+• 1 Day: 80 Balance
+• 3 Days: 170 Balance
+• 7 Days: 300 Balance
+• 30 Days: 600 Balance
+• 60 Days: 820 Balance
 
-📌 𝗠𝗜𝗡𝗜𝗠𝗨𝗠 𝗕𝗨𝗬: 2,000₹ (10,000 Credits)"""
+📌 𝗠𝗜𝗡𝗜𝗠𝗨𝗠 𝗕𝗨𝗬: 2,000₹ (5000 Balance)"""
     bot.reply_to(message, price_text)
 
 def run_bot():
